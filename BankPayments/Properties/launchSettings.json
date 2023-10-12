@@ -4,11 +4,20 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:4221",
-      "sslPort": 44304
+      "applicationUrl": "http://localhost:5001",
+      "sslPort": 5001
     }
   },
   "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "weatherforecast",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION_STRING": "Data Source=db-estudos-jj.database.windows.net;Initial Catalog=BankPaymentsManagerDB;Persist Security Info=True;User ID=useradmin;Password=Bank@2022"
+      }
+    },
     "BankPayments": {
       "commandName": "Project",
       "launchBrowser": true,
@@ -18,7 +27,6 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DB_CONNECTION_STRING": "Data Source=db-estudos-jj.database.windows.net;Initial Catalog=BankPaymentsManagerDB;Persist Security Info=True;User ID=useradmin;Password=Bank@2022"
       }
-    }
     }
   }
 }
