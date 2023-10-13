@@ -1,4 +1,6 @@
-﻿using BankPayments.Interfaces;
+﻿using AutoMapper;
+using BankPayments.DTOs;
+using BankPayments.Interfaces;
 using BankPayments.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +13,12 @@ namespace BankPayments.Controllers
     {
         private readonly IBankPaymentsBusiness _bankPaymentsBusiness;
 
-        public BankPaymentsController(IBankPaymentsBusiness bankPaymentsBusiness)
+        private readonly IMapper _mapper;
+
+        public BankPaymentsController(IBankPaymentsBusiness bankPaymentsBusiness, IMapper mapper)
         {
             _bankPaymentsBusiness = bankPaymentsBusiness;
+            _mapper = mapper;
         }
 
         [HttpPost("contribuicao-boleto")]
@@ -35,7 +40,7 @@ namespace BankPayments.Controllers
         }
 
         [HttpGet("boleto/{id}")]
-        public async Task<ActionResult<Boleto>> GetBoletoById(int id)
+        public async Task<ActionResult<BoletoDTO>> GetBoletoById(int id)
         {
             try
             {
@@ -45,7 +50,10 @@ namespace BankPayments.Controllers
                 {
                     return NotFound();
                 }
-                return Ok(boleto);
+
+               var boletoDTO = _mapper.Map<BoletoDTO>(boleto);
+
+                return Ok(boletoDTO);
             }
             catch (Exception ex)
             {

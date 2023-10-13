@@ -1,6 +1,7 @@
 using BankPayments.Business;
 using BankPayments.Infrastructure;
 using BankPayments.Interfaces;
+using BankPayments.Mappings;
 using BankPayments.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<BankPaymentsManagerDBContext>(options =>
 });
 
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(EntitiesToDtoMapping));
 
 builder.Services.AddScoped<IBancoRepository, BancoRepository>();
 builder.Services.AddScoped<IBoletoRepository, BoletoRepository>();
