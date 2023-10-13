@@ -4,15 +4,15 @@ namespace BankPayments.Interfaces
 {
     public interface IBankPaymentsBusiness
     {
-        public void AddBanco(Banco banco);
+        public Task<bool> AddBancoAsync(Banco banco);
 
         public Task<IEnumerable<Banco>> GetAllBancos();
 
-        public Task<Banco> GetBancoById(long id);
+        public Task<Banco> GetBancoByCode(String codigoBanco);
 
-        public void AddBoleto(Boleto bolteto);
+        public Task<bool> AddBoletoAsync(Boleto bolteto);
 
-        public Task<Boleto> GetBoletoById(long id);
+        public Task<Boleto> GetBoletoById(int id);
 
     }
 }

@@ -33,9 +33,6 @@ public partial class BankPaymentsManagerDBContext : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Banco).WithMany(p => p.Boleto)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Boleto__BancoId__6477ECF3");
         });
 
         OnModelCreatingPartial(modelBuilder);

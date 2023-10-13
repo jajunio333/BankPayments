@@ -6,7 +6,7 @@ namespace BankPayments.Interfaces
     {
         public void AddBoleto(Boleto bolteto);
 
-        public Task<Boleto> GetBoletoById(long id);
+        public Task<Boleto> GetBoletoById(int id);
 
         public Task<bool> SaveAllAsync();
     }

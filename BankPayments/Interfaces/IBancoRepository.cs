@@ -8,7 +8,8 @@ namespace BankPayments.Interfaces
 
         public Task<IEnumerable<Banco>> GetAllBancosAsync();
 
-        public Task<Banco> GetBancoById(long id);
+        public Task<Banco> GetBancoByCode(string codigoBanco);
+        public Task<Banco> GetBancoById(int id);
 
         public Task<bool> SaveAllAsync();
     }

@@ -46,7 +46,4 @@ public partial class Boleto
     [Required]
     public int BancoId { get; set; }
 
-    [ForeignKey("BancoId")]
-    [InverseProperty("Boleto")]
-    public virtual Banco Banco { get; set; }
 }

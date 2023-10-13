@@ -15,17 +15,56 @@ namespace BankPayments.Business
             _boletoRepository = boletoRepository;
         }
 
-        public void AddBanco(Banco banco) => _bancoRepository.AddBanco(banco);
+        public async Task<bool> AddBancoAsync(Banco banco)
+        {
+            _bancoRepository.AddBanco(banco);
+            if ( await _bancoRepository.SaveAllAsync())
+                return true;
+
+            return false;
+        }
+
+        public async Task<bool> AddBoletoAsync(Boleto boleto)
+        {
+            _boletoRepository.AddBoleto(boleto);
+
+            if (await _boletoRepository.SaveAllAsync())
+                return true;
+
+            return false;
+        }
 
         public async Task<IEnumerable<Banco>> GetAllBancos() => await _bancoRepository.GetAllBancosAsync();
 
-        public async Task<Banco> GetBancoById(long id) => await _bancoRepository.GetBancoById(id);
+        public async Task<Banco> GetBancoByCode(String codigoBanco) => await _bancoRepository.GetBancoByCode(codigoBanco);
 
-        public void AddBoleto(Boleto boleto) => _boletoRepository.AddBoleto(boleto);
-
-        public async Task<Boleto> GetBoletoById(long id)
+        public async Task<Boleto> GetBoletoById(int id)
         {
-            return await _boletoRepository.GetBoletoById(id);
+          Boleto result = await _boletoRepository.GetBoletoById(id);
+
+            if (result.DataVencimento < DateTime.Today)
+            {
+                return await CalculateInterest(result);
+            }
+                
+            return result;
         }
+
+        #region private methodes
+
+        private async Task<Boleto> CalculateInterest(Boleto boleto)
+        {
+            int numDays = (int)(DateTime.Today - boleto.DataVencimento).TotalDays;
+            var bank = await _bancoRepository.GetBancoById(boleto.BancoId);
+
+            decimal juros = boleto.Valor * (bank.PercentualJuros / 100);
+            decimal valorComJuros = boleto.Valor + juros * numDays;
+
+            boleto.Valor = Math.Round(valorComJuros, 2);
+
+            return boleto;
+        }
+
+        #endregion
     }
 }

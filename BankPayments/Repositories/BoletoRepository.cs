@@ -19,11 +19,8 @@ namespace BankPayments.Repositories
             _context.Boleto.Add(boleto);
         }
 
-        public async Task<Boleto> GetBoletoById(long id) => await _context.Boleto.Where(x => x.Id == id).FirstOrDefaultAsync();
+        public async Task<Boleto> GetBoletoById(int id) => await _context.Boleto.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
+        public async Task<bool> SaveAllAsync() => await _context.SaveChangesAsync() > 0;
     }
 }

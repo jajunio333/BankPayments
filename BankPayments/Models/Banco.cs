@@ -23,6 +23,4 @@ public partial class Banco
     [Column(TypeName = "decimal(5, 2)")]
     public decimal PercentualJuros { get; set; }
 
-    [InverseProperty("Banco")]
-    public virtual ICollection<Boleto> Boleto { get; set; } = new List<Boleto>();
 }

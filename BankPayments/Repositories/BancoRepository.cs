@@ -2,7 +2,6 @@
 using BankPayments.Interfaces;
 using BankPayments.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace BankPayments.Repositories
 {
@@ -22,8 +21,10 @@ namespace BankPayments.Repositories
             return listBancos;
         }
 
-        public async Task<Banco> GetBancoById(long id) => await _context.Banco.Where(x => x.Id == id).FirstOrDefaultAsync();
-     
+        public async Task<Banco> GetBancoByCode(String codigoBanco) => await _context.Banco.Where(x => x.CodigoBanco.Equals(codigoBanco)).FirstOrDefaultAsync();
+
+        public async Task<Banco> GetBancoById(int id) => await _context.Banco.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
+
         public async Task<bool> SaveAllAsync() => await _context.SaveChangesAsync() > 0;
     }
 }
